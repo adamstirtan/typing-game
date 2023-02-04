@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Typing Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.50.1/dist/phaser.js"></script>
+</head>
+
+<body>
+
+    <script>
+        var words = ["apple", "banana", "cherry", "date", "elderberry"];
+        var word = "";
+        var score = 0;
+
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            scene: {
+                preload: preload,
+                create: create
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload()
+        {
+            this.load.image("background", "background.png");
+        }
+
+        function create() {
+            //this.add.image(400, 300, "background");
+            this.wordText = this.add.text(100, 100, "", { font: "32px Arial", fill: "#ff0044" });
+            this.scoreText = this.add.text(100, 200, "Score: " + score, { font: "32px Arial", fill: "#ff0044" });
+            this.input.keyboard.on("keydown", keyDown, this);
+            newWord();
+        }
+
+        function keyDown(event) {
+            if (event.key === word[this.wordText.text.length]) {
+                this.wordText.text += event.key;
+            }
+
+            if (this.wordText.text === word) {
+                score++;
+                this.scoreText.text = "Score: " + score;
+                this.wordText.text = "";
+                newWord();
+            }
+        }
+        
+        function newWord () {
+            word = Phaser.Math.RND.pick(words);
+        }
+    </script>
+
+</body>
+
+</html>
