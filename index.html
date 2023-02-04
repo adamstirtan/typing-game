@@ -10,14 +10,18 @@
 <body>
 
     <script>
-        var words = ["apple", "banana", "cherry", "date", "elderberry"];
+        const width = 960;
+        const height = 540;
+
+        var words = ["soda shower", "magical mom", "ninja sneeze", "cactus hug", "alien tacos", "titanic plush", "pirate nap", "spider dance", "zombie run", "unicorn burp", "kangaroo hop", "gorilla giggle", "penguin slide", "monkey mosh", "llama laugh", "giraffe gym", "ostrich party", "koala karate", "panda picnic", "tiger twirl", "squirrel spa", "shark sing", "elephant eat", "flamingo fly", "hippo hula", "dolphin dive", "lion lullaby", "giraffe gig", "piggy powwow", "raccoon rock", "foxy fiesta", "bunny bounce", "kitten karaoke", "dragon dance", "crocodile clap", "squid splash", "horse hop", "frog friend", "otter swim", "wolf howl", "bear dance", "deer delight", "moose mingle", "cheetah chase", "lobster leap", "turtle talk", "hedgehog hop", "pony playtime", "ocelot snuggle"];
+
         var word = "";
         var score = 0;
 
         var config = {
             type: Phaser.AUTO,
-            width: 800,
-            height: 600,
+            width: width,
+            height: height,
             scene: {
                 preload: preload,
                 create: create
@@ -26,33 +30,87 @@
 
         var game = new Phaser.Game(config);
 
-        function preload()
-        {
-            this.load.image("background", "background.png");
+        function preload() {
+            this.load.image("background", "Board.png");
+
+            this.load.audio("type1", "type1.wav");
+            this.load.audio("type2", "type2.wav");
+            this.load.audio("score_up", "score_up.wav");
+            this.load.audio("wrong", "wrong.wav");
+            this.load.audio("celebrate", "celebrate.wav");
         }
 
         function create() {
-            //this.add.image(400, 300, "background");
-            this.wordText = this.add.text(100, 100, "", { font: "32px Arial", fill: "#ff0044" });
-            this.scoreText = this.add.text(100, 200, "Score: " + score, { font: "32px Arial", fill: "#ff0044" });
-            this.input.keyboard.on("keydown", keyDown, this);
             newWord();
+
+            this.add.image(480, 270, "background");
+
+            this.wordText = this.add.text(100, 200, word, {
+                font: "64px Arial",
+                fill: "#ccc"
+            });
+
+            this.typingText = this.add.text(100, 200, "", {
+                font: "64px Arial",
+                fill: "#000"
+            })
+
+            this.scoreText = this.add.text(80, 120, "Score: " + score, {
+                font: "32px Arial",
+                fill: "#ff0044"
+            });
+
+            this.type1Sound = this.sound.add("type1");
+            this.type2Sound = this.sound.add("type2");
+            this.scoreUpSound = this.sound.add("score_up");
+            this.wrongSound = this.sound.add("wrong");
+            this.celebrateSound = this.sound.add("celebrate");
+
+            this.input.keyboard.on("keydown", keyDown, this);
         }
 
         function keyDown(event) {
-            if (event.key === word[this.wordText.text.length]) {
-                this.wordText.text += event.key;
+            if (Math.random() < 0.5) {
+                this.type1Sound.play();
+            } else {
+                this.type2Sound.play();
             }
 
-            if (this.wordText.text === word) {
-                score++;
+            if (event.key !== word[this.typingText.text.length]) {
+                this.wrongSound.play();
+
+                score = 0;
                 this.scoreText.text = "Score: " + score;
-                this.wordText.text = "";
+
                 newWord();
+
+                this.typingText.text = "";
+                this.wordText.text = word;
+
+                return;
+            }
+
+            this.typingText.text += event.key;
+
+            if (this.typingText.text === word) {
+                score++;
+
+                if (score % 10 == 0) {
+                    this.celebrateSound.play();
+                } else {
+                    this.scoreUpSound.play();
+                }
+
+                this.scoreText.text = "Score: " + score;
+
+                newWord();
+
+                this.typingText.text = "";
+                this.wordText.text = word;
             }
         }
-        
-        function newWord () {
+
+        function newWord() {
             word = Phaser.Math.RND.pick(words);
         }
     </script>
