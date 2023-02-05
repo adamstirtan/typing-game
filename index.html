@@ -10,21 +10,42 @@
 <body>
 
     <script>
-        const width = 960;
-        const height = 540;
+        let words = [
+            "happy sunshine day",
+            "funny bunny hops",
+            "big blue whale",
+            "cute kitten purr",
+            "green grass grow",
+            "bright butterfly",
+            "jolly jumping jack",
+            "strong silly monkey",
+            "friendly firefly glow",
+            "silly squirrel scamper",
+            "sweet singing bird",
+            "gentle giraffe stretch",
+            "sparkly starry night",
+            "fast flying plane",
+            "colorful caterpillar",
+            "happy honeybee buzz",
+            "bold brave lion",
+            "dancing daffodil sway",
+            "little ladybug fly",
+            "cool crab crawl",
+            "shiny smiling sun"
+        ];
 
-        var words = ["soda shower", "magical mom", "ninja sneeze", "cactus hug", "alien tacos", "titanic plush", "pirate nap", "spider dance", "zombie run", "unicorn burp", "kangaroo hop", "gorilla giggle", "penguin slide", "monkey mosh", "llama laugh", "giraffe gym", "ostrich party", "koala karate", "panda picnic", "tiger twirl", "squirrel spa", "shark sing", "elephant eat", "flamingo fly", "hippo hula", "dolphin dive", "lion lullaby", "giraffe gig", "piggy powwow", "raccoon rock", "foxy fiesta", "bunny bounce", "kitten karaoke", "dragon dance", "crocodile clap", "squid splash", "horse hop", "frog friend", "otter swim", "wolf howl", "bear dance", "deer delight", "moose mingle", "cheetah chase", "lobster leap", "turtle talk", "hedgehog hop", "pony playtime", "ocelot snuggle"];
-
-        var word = "";
-        var score = 0;
+        let word = "";
+        let score = 0;
+        let velocity = { x: 150, y: 150 };
 
         var config = {
             type: Phaser.AUTO,
-            width: width,
-            height: height,
+            width: 960,
+            height: 540,
             scene: {
                 preload: preload,
-                create: create
+                create: create,
+                update: update
             }
         };
 
@@ -55,9 +76,9 @@
                 fill: "#000"
             })
 
-            this.scoreText = this.add.text(80, 120, "Score: " + score, {
-                font: "32px Arial",
-                fill: "#ff0044"
+            this.scoreText = this.add.text(630, 70, "Score: " + score, {
+                font: "24px Arial",
+                fill: "#222"
             });
 
             this.type1Sound = this.sound.add("type1");
@@ -67,6 +88,24 @@
             this.celebrateSound = this.sound.add("celebrate");
 
             this.input.keyboard.on("keydown", keyDown, this);
+        }
+
+        function update(time, delta) {
+            this.wordText.x += velocity.x * delta / 1000;
+            this.wordText.y += velocity.y * delta / 1000;
+
+            if (this.wordText.x < 46 ||
+                this.wordText.x + this.wordText.width > game.config.width - 46) {
+                velocity.x = -velocity.x;
+            }
+
+            if (this.wordText.y < 105 ||
+                this.wordText.y + this.wordText.height > game.config.height - 25) {
+                velocity.y = -velocity.y;
+            }
+
+            this.typingText.x = this.wordText.x;
+            this.typingText.y = this.wordText.y;
         }
 
         function keyDown(event) {
@@ -79,7 +118,10 @@
             if (event.key !== word[this.typingText.text.length]) {
                 this.wrongSound.play();
 
-                score = 0;
+                if (score > 0) {
+                    score--;
+                }
+
                 this.scoreText.text = "Score: " + score;
 
                 newWord();
