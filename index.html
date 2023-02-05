@@ -11,32 +11,21 @@
 
     <script>
         let words = [
-            "happy sunshine day",
-            "funny bunny hops",
-            "big blue whale",
-            "cute kitten purr",
-            "green grass grow",
-            "bright butterfly",
-            "jolly jumping jack",
-            "strong silly monkey",
-            "friendly firefly glow",
-            "silly squirrel scamper",
-            "sweet singing bird",
-            "gentle giraffe stretch",
-            "sparkly starry night",
-            "fast flying plane",
-            "colorful caterpillar",
-            "happy honeybee buzz",
-            "bold brave lion",
-            "dancing daffodil sway",
-            "little ladybug fly",
-            "cool crab crawl",
-            "shiny smiling sun"
+            "giggle",
+            "silly",
+            "wacky",
+            "tickle",
+            "goofy",
+            "boop",
+            "hilarious",
+            "ridiculous",
+            "dorky",
+            "sassy"
         ];
 
         let word = "";
         let score = 0;
-        let velocity = { x: 150, y: 150 };
+        let velocity = { x: 100, y: 100 };
 
         var config = {
             type: Phaser.AUTO,
@@ -59,6 +48,8 @@
             this.load.audio("score_up", "score_up.wav");
             this.load.audio("wrong", "wrong.wav");
             this.load.audio("celebrate", "celebrate.wav");
+            this.load.audio("bounce", "bounce.wav");
+            this.load.audio("music", "music.mp3");
         }
 
         function create() {
@@ -86,6 +77,11 @@
             this.scoreUpSound = this.sound.add("score_up");
             this.wrongSound = this.sound.add("wrong");
             this.celebrateSound = this.sound.add("celebrate");
+            this.bounceSound = this.sound.add("bounce");
+            this.music = this.sound.add("music");
+
+            this.music.setLoop(true);
+            this.music.play();
 
             this.input.keyboard.on("keydown", keyDown, this);
         }
@@ -96,11 +92,13 @@
 
             if (this.wordText.x < 46 ||
                 this.wordText.x + this.wordText.width > game.config.width - 46) {
+                this.bounceSound.play();
                 velocity.x = -velocity.x;
             }
 
             if (this.wordText.y < 105 ||
                 this.wordText.y + this.wordText.height > game.config.height - 25) {
+                this.bounceSound.play();
                 velocity.y = -velocity.y;
             }
 
