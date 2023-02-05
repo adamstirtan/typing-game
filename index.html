@@ -41,15 +41,15 @@
         var game = new Phaser.Game(config);
 
         function preload() {
-            this.load.image("background", "Board.png");
+            this.load.image("background", "images/Board.png");
 
-            this.load.audio("type1", "type1.wav");
-            this.load.audio("type2", "type2.wav");
-            this.load.audio("score_up", "score_up.wav");
-            this.load.audio("wrong", "wrong.wav");
-            this.load.audio("celebrate", "celebrate.wav");
-            this.load.audio("bounce", "bounce.wav");
-            this.load.audio("music", "music.mp3");
+            this.load.audio("type1", "audio/type1.wav");
+            this.load.audio("type2", "audio/type2.wav");
+            this.load.audio("score_up", "audio/score_up.wav");
+            this.load.audio("wrong", "audio/wrong.wav");
+            this.load.audio("celebrate", "audio/celebrate.wav");
+            this.load.audio("bounce", "audio/bounce.wav");
+            this.load.audio("music", "audio/music.mp3");
         }
 
         function create() {
