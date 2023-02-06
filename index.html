@@ -18,7 +18,7 @@
         let score = 0;
         let velocity = { x: 100, y: 100 };
 
-        var config = {
+        let config = {
             type: Phaser.AUTO,
             width: 960,
             height: 540,
@@ -29,7 +29,7 @@
             }
         };
 
-        var game = new Phaser.Game(config);
+        let game = new Phaser.Game(config);
 
         function preload() {
             this.load.image("background", "images/Board.png");
