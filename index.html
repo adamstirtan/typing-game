@@ -16,7 +16,7 @@
 
         let word = "";
         let score = 0;
-        let velocity = { x: 100, y: 100 };
+        let velocity = { x: 50, y: 50 };
 
         let config = {
             type: Phaser.AUTO,
@@ -29,7 +29,7 @@
             }
         };
 
-        const isAlphaNumeric = /^[0-9a-zA-Z]+$/;
+        const isAlphaNumeric = /^[0-9a-zA-Z ]+$/;
 
         let game = new Phaser.Game(config);
 
