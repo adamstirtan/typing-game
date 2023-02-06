@@ -29,6 +29,8 @@
             }
         };
 
+        const isAlphaNumeric = /^[0-9a-zA-Z]+$/;
+
         let game = new Phaser.Game(config);
 
         function preload() {
@@ -98,6 +100,10 @@
         }
 
         function keyDown(event) {
+            if (!event.key.match(isAlphaNumeric)) {
+                return;
+            }
+
             if (Math.random() < 0.5) {
                 this.type1Sound.play();
             } else {
