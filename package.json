@@ -1,0 +1,61 @@
+{
+    "name": "phaser-project-template",
+    "version": "3.55.2",
+    "description": "Phaser 3 starter template with TypeScript and webpack.",
+    "homepage": "https://github.com/yandeu/phaser-project-template#readme",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack serve --config webpack/webpack.dev.js",
+        "build": "rimraf dist && webpack --config webpack/webpack.prod.js",
+        "bundle": "npm run build",
+        "serve": "serve dist",
+        "format": "prettier --check src/scripts/**",
+        "format:write": "prettier --write src/scripts/**"
+    },
+    "keywords": [
+        "Phaser",
+        "Phaser 3",
+        "Phaser3",
+        "html5 game",
+        "TypeScript",
+        "webpack",
+        "starter"
+    ],
+    "author": {
+        "name": "Yannick Deubel",
+        "url": "https://github.com/yandeu"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yandeu/phaser-project-template.git"
+    },
+    "template": {
+        "name": "phaser-project-template",
+        "url": "https://github.com/yandeu/phaser-project-template",
+        "author": "Yannick Deubel (https://github.com/yandeu)"
+    },
+    "engines": {
+        "node": ">=12"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "phaser": "^3.55.2"
+    },
+    "devDependencies": {
+        "@yandeu/prettier-config": "^0.0.3",
+        "copy-webpack-plugin": "^10.1.0",
+        "html-webpack-plugin": "^5.5.0",
+        "javascript-obfuscator": "^4.0.0",
+        "prettier": "^2.5.1",
+        "rimraf": "^3.0.2",
+        "serve": "^14.1.2",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.5.3",
+        "webpack": "^5.65.0",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.6.0",
+        "webpack-merge": "^5.8.0",
+        "webpack-obfuscator": "^3.5.0",
+        "workbox-webpack-plugin": "^6.4.2"
+    }
+}
